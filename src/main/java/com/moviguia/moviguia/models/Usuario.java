@@ -23,8 +23,6 @@ public class Usuario implements Serializable {
     @Column(nullable = false, unique = true)
     String email;
     String senha;
-    String preferencias_acessibilidade;
-    String contato_emergencia;
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;

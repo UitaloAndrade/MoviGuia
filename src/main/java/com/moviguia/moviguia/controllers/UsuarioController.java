@@ -1,8 +1,10 @@
 package com.moviguia.moviguia.controllers;
 
 import com.moviguia.moviguia.models.Usuario;
+import com.moviguia.moviguia.models.login.UsuarioLogin;
 import com.moviguia.moviguia.services.UsuarioService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,14 +14,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 
+    @Autowired
     UsuarioService usuarioService;
-
-    public UsuarioController(UsuarioService usuarioService) {}
 
     @PostMapping
     public ResponseEntity novoUsuario(@RequestBody @Valid Usuario usuario) {
         usuarioService.novoUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody @Valid UsuarioLogin data) {
+        var usuario = usuarioService.login(data);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @PutMapping
